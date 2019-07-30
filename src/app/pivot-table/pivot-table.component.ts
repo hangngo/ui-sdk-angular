@@ -1,39 +1,14 @@
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as uuid from 'uuid';
 import * as invariant from 'invariant';
+
 import { Component, Input, OnInit, OnDestroy, OnChanges, AfterViewInit } from '@angular/core';
-
-import '@gooddata/react-components/styles/css/main.css';
 import { PivotTable } from '@gooddata/react-components';
-import {
-  projectId,
-  quarterDateIdentifier,
-  monthDateIdentifier,
-  locationStateDisplayFormIdentifier,
-  locationNameDisplayFormIdentifier,
-  franchiseFeesIdentifier,
-  franchiseFeesAdRoyaltyIdentifier,
-  franchiseFeesInitialFranchiseFeeIdentifier,
-  franchiseFeesIdentifierOngoingRoyalty,
-  menuCategoryAttributeDFIdentifier,
-} from '../../utils/fixtures.js';
 
 
-// interface PivotTableBucketProps {
-//   measures?: any[];
-//   rows?: any[];
-//   columns?: any[];
-//   totals?: any[];
-//   filters?: any[];
-//   sortBy?: any[];
-// }
-interface PivotTableProps {
-  projectId: string;
-  pageSize?: number;
-  //config?: PivotTableConfigPros;
-  groupRows?: boolean;
-  exportTitle?: string;
+interface PivotTableBucketProps {
   measures?: any[];
   rows?: any[];
   columns?: any[];
@@ -41,26 +16,60 @@ interface PivotTableProps {
   filters?: any[];
   sortBy?: any[];
 }
+interface PivotTableProps extends PivotTableBucketProps{
+  projectId: string;
+  pageSize?: number;
+  config?: any;
+  groupRows?: boolean;
+  exportTitle?: string;
+}
 
 @Component({
   selector: 'app-pivot-table',
-  template: '<span [id]="rootDomID"></span>'
-  // templateUrl: './pivot-table.component.html',
-  // styleUrls: ['./pivot-table.component.css']
+  template: '<div class="myContainer" style="height:300px" [id]="rootDomID"></div>',
 })
-export class PivotTableComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit  {
 
-  @Input() measures?: any[];
+export class PivotTableComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @Input() projectId: string;
-  @Input() rows?: any[];
-  @Input() columns?: any[];
-  @Input() pageSize?: number;
-  @Input() groupRows?: boolean;
-  @Input() exportTitle?: string;
-  @Input() totals?: any[];
-  @Input() filters?: any[];
-  @Input() sortBy?: any[];
- // @Input() config?: (any);
+  @Input() pageSize: number;
+
+  Measures = [
+    {
+        measure: {
+            localIdentifier: 'GrossProfit',
+            definition: {
+                measureDefinition: {
+                    item: {
+                        identifier: 'aa5JBkFDa7sJ'
+                    }
+                }
+            },
+            format: '#,##0'
+        }
+    }
+];
+Columns = [
+  {
+      visualizationAttribute: {
+          displayForm: {
+              identifier: "label.restaurantlocation.locationcity"
+          },
+          localIdentifier: 'locationcity'
+      }
+  }
+];
+
+Rows = [
+  {
+      visualizationAttribute: {
+          displayForm: {
+              identifier: "label.restaurantlocation.locationstate"
+          },
+          localIdentifier: 'locationstate'
+      }
+  }
+];
+
 
   public rootDomID: string;
 
@@ -69,54 +78,15 @@ export class PivotTableComponent implements OnInit, OnDestroy, OnChanges, AfterV
     invariant(node, `Node '${this.rootDomID} not found!`);
     return node;
   }
-
-  // protected getBuckets(): PivotTableProps {
-  //   const {
-  //     measures,
-  //     rows,
-  //     columns,
-  //     totals,
-  //     filters,
-  //     sortBy
-  //   } = this;
-  //   return {
-  //     measures,
-  //     rows,
-  //     columns,
-  //     totals,
-  //     filters,
-  //     sortBy
-  //   };
-  // }
-
   protected getProps(): PivotTableProps {
-    const {
-      projectId,
-      pageSize,
-     // config,
-      groupRows,
-      exportTitle,
-      measures,
-      rows,
-      columns,
-      totals,
-      filters,
-      sortBy
-    } = this;
     return {
-      projectId,
-      pageSize,
-     // config,
-      groupRows,
-      exportTitle,
-      measures,
-      rows,
-      columns,
-      totals,
-      filters,
-      sortBy
+      projectId: this.projectId,
+      measures: this.Measures,
+      rows: this.Rows,
+      columns: this.Columns
     };
   }
+
 
   private isMounted(): boolean {
     return !!this.rootDomID;
@@ -126,6 +96,7 @@ export class PivotTableComponent implements OnInit, OnDestroy, OnChanges, AfterV
     if (this.isMounted()) {
       ReactDOM.render(React.createElement(PivotTable, this.getProps()), this.getRootDomNode());
     }
+    
   }
 
   ngOnInit() {
@@ -144,5 +115,6 @@ export class PivotTableComponent implements OnInit, OnDestroy, OnChanges, AfterV
     // Uncomment if Angular 4 issue that ngOnDestroy is called AFTER DOM node removal is resolved
     // ReactDOM.unmountComponentAtNode(this.getRootDomNode())
   }
-
+  
+  
 }
