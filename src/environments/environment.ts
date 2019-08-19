@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://hang-angular-examples.herokuapp.com'
+  apiUrl: 'https://localhost:4200'
 };
 
 /*
