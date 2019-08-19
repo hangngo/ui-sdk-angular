@@ -26,7 +26,7 @@ interface PivotTableProps extends PivotTableBucketProps{
 
 @Component({
   selector: 'app-pivot-table',
-  template: '<div class="myContainer" style="height:300px" [id]="rootDomID"></div>',
+  template: '<div class="myContainer" [id]="rootDomID"></div>',
 })
 
 export class PivotTableComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
@@ -40,7 +40,7 @@ export class PivotTableComponent implements OnInit, OnDestroy, OnChanges, AfterV
             definition: {
                 measureDefinition: {
                     item: {
-                        identifier: 'aa5JBkFDa7sJ'
+                        identifier: 'aabXfg7igrJF'
                     }
                 }
             },
@@ -69,7 +69,26 @@ Rows = [
       }
   }
 ];
-
+SortBy = [
+  {
+      measureSortItem: {
+          direction: 'desc',
+          locators: [
+              {
+                  attributeLocatorItem: {
+                      attributeIdentifier: 'locationcity',
+                      element: '/gdc/md/ht3owbpk6h0yfjtkcsgva3osu3z7paol/obj/2208/elements?id=6340103'
+                  }
+              },
+              {
+                  measureLocatorItem: {
+                      measureIdentifier: 'GrossProfit'
+                  }
+              }
+          ]
+      }
+  }
+];
 
   public rootDomID: string;
 
@@ -83,7 +102,9 @@ Rows = [
       projectId: this.projectId,
       measures: this.Measures,
       rows: this.Rows,
-      columns: this.Columns
+      pageSize: this.pageSize,
+      // columns: this.Columns,
+      // sortBy: this.SortBy
     };
   }
 

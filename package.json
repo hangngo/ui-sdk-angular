@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --ssl true",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -22,6 +22,7 @@
     "@angular/router": "~7.0.0",
     "@gooddata/react-components": "^7.0.1",
     "ajv": "^6.10.2",
+    "angular-highcharts": "^7.2.0",
     "core-js": "^2.5.4",
     "invariant": "^2.2.4",
     "lodash": "^4.17.11",
