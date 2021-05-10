@@ -33,7 +33,7 @@
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "invariant": "^2.2.4",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "lodash.omit": "^4.5.0",
     "ngx-cookie-service": "~2.2.0",
     "path": "^0.12.7",
